@@ -1,0 +1,186 @@
+﻿@model Administrator
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login</title>
+    <style>
+        body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        height: 100vh;
+        background: linear-gradient(135deg, #0b0c10, #1f2833);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        }
+
+        .fireflies {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        }
+
+        .shooting-star {
+        position: absolute;
+        width: 2px;
+        height: 80px;
+        background: linear-gradient(gold, transparent);
+        opacity: 0.2;
+        transform: rotate(180deg);
+        animation: shoot 1.2s linear forwards;
+        }
+
+        @@keyframes shoot {
+        0% {
+        transform: translate(0, 0) rotate(45deg);
+        opacity: 0.2;
+        }
+
+        100% {
+        transform: translate(-600px, 600px) rotate(45deg);
+        opacity: 0;
+        }
+        }
+
+        .login-container {
+        position: relative;
+        background: rgba(0, 0, 0, 0.85);
+        padding: 2.5rem 3rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
+        width: 320px;
+        text-align: center;
+        color: #f5f5f5;
+        z-index: 1;
+        }
+
+        .login-container h2 {
+        margin-bottom: 1.8rem;
+        color: #fff;
+        font-weight: 600;
+        font-size: 1.6rem;
+        letter-spacing: 1.2px;
+        }
+
+        .input-group {
+        margin-bottom: 1.3rem;
+        text-align: left;
+        }
+
+        label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #e6e6e6;
+        font-size: 0.9rem;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+        width: 100%;
+        padding: 0.55rem 0.8rem;
+        font-size: 1rem;
+        border: 1.8px solid #a23e57;
+        border-radius: 8px;
+        background: #2a2a2a;
+        color: #f0f0f0;
+        transition: border-color 0.3s ease;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+        border-color: #d07a91;
+        outline: none;
+        background: #3a3a3a;
+        }
+
+        button {
+        width: 100%;
+        padding: 0.75rem 0;
+        background: #8b2036;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 3px 8px rgba(139, 32, 54, 0.6);
+        }
+
+        button:hover {
+        background: #a42a46;
+        }
+
+    </style>
+	<link href="~/lib/bootstrap/dist/css/bootstrap-grid.min.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="fireflies" id="sky"></div>
+
+    <div class="login-container">
+        <h2>Kervan Emlak</h2>
+
+        <!-- Anasayfa Linki -->
+
+        @if (TempData["Empty"] != null)
+        {
+            <div class="alert alert-danger text-center fw-bold">
+                @TempData["Empty"]
+            </div>
+        }
+        <form action="/Admin/Administrator/Login" method="post">
+            <input type="hidden" name="Id" />
+            <div class="input-group">
+                <label for="email">E-posta</label>
+                <input type="email" id="email" name="Email" placeholder="mail@ornek.com" required />
+            </div>
+            <div class="input-group">
+                <label for="password">Şifre</label>
+                <input type="password" id="password" name="Password" placeholder="Şifrenizi girin" required />
+            </div>
+        <div class="mb-3">
+            <a href="/" class="btn btn-outline-light btn-sm w-100">← Anasayfa</a>
+        </div>
+            <button type="submit">Giriş Yap</button>
+        </form>
+    </div>
+
+    <script>
+
+                const sky = document.getElementById('sky');
+
+        function createShootingStar() {
+            const star = document.createElement('div');
+            star.classList.add('shooting-star');
+
+            const top = Math.random() * window.innerHeight * 0.6;
+            const left = Math.random() * window.innerWidth * 0.8 + window.innerWidth * 0.2;
+
+            star.style.top = `${top}px`;
+            star.style.left = `${left}px`;
+
+            sky.appendChild(star);
+
+            star.addEventListener('animationend', () => {
+                star.remove();
+            });
+        }
+
+        setInterval(() => {
+            createShootingStar();
+        }, Math.random() * 1000 + 4000);
+    </script>
+     
+
+</body>
+</html>

@@ -1,0 +1,183 @@
+﻿@model Administrator
+@{ 
+    ViewData["Title"] = "Yeni Kullanıcı Oluştur"; 
+    Layout = "~/Areas/Admin/Views/_LayoutAdmin.cshtml";
+}
+
+<style>
+  
+
+    form {
+        background: white;
+        padding: 2.5rem 3rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+        width: 700px; 
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: auto; 
+    }
+
+    h2 {
+        font-weight: 700;
+        font-size: 1.9rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        color: #2c3e50;
+        letter-spacing: 1.1px;
+    }
+
+    label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+        font-size: 1rem;
+        color: #4a4a4a;
+    }
+
+    input.form-control,
+    textarea.form-control,
+    select.form-control {  
+        width: 100%;
+        padding: 0.55rem 0.75rem;
+        font-size: 1rem;
+        border: 1.5px solid #ced4da;
+        border-radius: 8px;
+        background-color: #fff;
+        color: #2c3e50;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        font-family: inherit;
+    }
+
+        input.form-control::placeholder,
+        textarea.form-control::placeholder {
+            color: #a9a9a9;
+            font-style: italic;
+        }
+
+        input.form-control:focus,
+        textarea.form-control:focus,
+        select.form-control:focus {
+            outline: none;
+            border-color: #3b5998;
+            box-shadow: 0 0 6px rgba(59, 89, 152, 0.4);
+            background-color: #fff;
+        }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 90px;
+    }
+
+    .form-check {
+        display: flex;
+        align-items: center;
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-check-input {
+        width: 18px;
+        height: 18px;
+        margin-right: 0.6rem;
+        cursor: pointer;
+    }
+
+    .form-check-label {
+        font-weight: 600;
+        color: #4a4a4a;
+        cursor: pointer;
+    }
+
+    button.btn-primary {
+        display: block;
+        width: 100%;
+        padding: 0.7rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #fff;
+        background-color: #3b5998;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-family: 'Merriweather', serif;
+    }
+
+        button.btn-primary:hover {
+            background-color: #2d4373;
+        }
+</style>
+
+<form action="/Admin/Administrator/Create" method="post" enctype="multipart/form-data">
+    <h2>Kullanıcı Oluştur</h2>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="Name" class="form-label">Adı</label>
+            <input name="Name" id="Name" class="form-control" />
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="Surname" class="form-label">Soyadı</label>
+            <input name="Surname" id="Surname" class="form-control" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="Resume" class="form-label">Özgeçmiş</label>
+            <textarea name="Resume" id="Resume" class="form-control"></textarea>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="Gender" class="form-label">Cinsiyet</label>
+            <select name="Gender" id="Gender" class="form-control">
+                <option value="">Seçiniz</option>
+                <option>Erkek</option>
+                <option>Kadın</option>
+            </select>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="City" class="form-label">Şehir</label>
+            <input name="City" id="City" class="form-control" />
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="District" class="form-label">İlçe</label>
+            <input name="District" id="District" class="form-control" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="Email" class="form-label">Mail</label>
+            <input name="Email" id="Email" type="email" class="form-control" />
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="Phone" class="form-label">Telefon Numarası</label>
+            <input name="Phone" id="Phone" type="text" class="form-control" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="Pass" class="form-label">Şifre Belirleme</label>
+            <input name="Password" id="Pass" type="password" class="form-control" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="Position" class="form-label">Pozisyon</label>
+            <input name="Position" id="Position" class="form-control" />
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="isSuperAdmin" id="flexCheckDefault" value="true" />
+            <label class="form-check-label" for="flexCheckDefault">
+                Üst düzey yönetici.
+            </label>
+        </div>
+        <input type="hidden" name="IsSuperAdmin" value="false" />
+
+
+        <div class="col-md-6 mb-3">
+            <label for="Image" class="form-label">Fotoğraf</label>
+            <input type="file" name="file" id="Image" class="form-control" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-4">Oluştur</button>
+</form>
+
+ 

@@ -1,0 +1,62 @@
+﻿@model Image
+
+@{
+    Layout = "~/Areas/Admin/Views/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Resim Güncelle</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <form asp-action="Update" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+
+         <div class="form-group"> 
+          <label for="Name">Resim Adı</label> 
+           <input type="text" name="Name" value="@Model.Name" class="form-control" readonly/> 
+           <span class="text-danger">@Html.ValidationMessage("Name")</span>   </div>  
+      
+        @*Resim ismini sabit yaptım. Çünkü Adminler sadece resimleri güncelleyebilir. 
+        Yeni resim satırı ekleyemez. Sadece Patron ekleyebilir.*@
+
+        <div class="form-group">
+            <label>Mevcut Resim 1</label><br />
+            @if (!string.IsNullOrEmpty(Model.Image1))
+            {
+                <img src="@Url.Content("~/FolderImage/" + Model.Image1)" alt="Resim 1" class="img-thumbnail mb-2" style="max-height:150px" />
+            }
+            <input type="file" name="pic1" class="form-control-file" />
+        </div>
+
+        <div class="form-group">
+            <label>Mevcut Resim 2</label><br />
+            @if (!string.IsNullOrEmpty(Model.Image2))
+            {
+                <img src="@Url.Content("~/FolderImage/" + Model.Image2)" alt="Resim 2" class="img-thumbnail mb-2" style="max-height:150px" />
+            }
+            <input type="file" name="pic2" class="form-control-file" />
+        </div>
+
+        <div class="form-group">
+            <label>Mevcut Resim 3</label><br />
+            @if (!string.IsNullOrEmpty(Model.Image3))
+            {
+                <img src="@Url.Content("~/FolderImage/" + Model.Image3)" alt="Resim 3" class="img-thumbnail mb-2" style="max-height:150px" />
+            }
+            <input type="file" name="pic3" class="form-control-file" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary ml-2">İptal</a>
+    </form>
+</div>
+
+ 

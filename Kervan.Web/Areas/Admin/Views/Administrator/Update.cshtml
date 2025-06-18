@@ -1,0 +1,90 @@
+﻿@using System.Security.Claims
+@model Administrator
+
+@{
+    Layout = "~/Areas/Admin/Views/_LayoutAdmin.cshtml";
+}
+<h2 class="text-center mt-4 mb-4">Admin Güncelle</h2>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+
+<div class="container shadow p-4 rounded-3 bg-light" style="max-width: 700px;">
+    <form action="/Admin/Administrator/Update" method="post" enctype="multipart/form-data" class="needs-validation">
+<input type="hidden" name="Id"  value="@Model.Id" />
+        <div class="mb-3">
+            <label for="Name" class="form-label">Ad</label>
+            <input id="Name" name="Name" class="form-control" required value="@Model.Name" />
+        </div>
+
+        <div class="mb-3">
+            <label for="Surname" class="form-label">Soyad</label>
+            <input id="Surname" name="Surname" class="form-control" required value="@Model.Surname" />
+        </div>
+
+
+        @if (User.FindFirst(ClaimTypes.Role)?.Value == "True")
+{
+        <div class="mb-3">
+            <label for="Resume" class="form-label">Özgeçmiş</label>
+            <textarea id="Resume" name="Resume" class="form-control" rows="4">@Model.Resume</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="Gender" class="form-label">Cinsiyet</label>
+            <select id="Gender" name="Gender" class="form-select">
+                <option value="">Seçiniz</option>
+                <option value="Male" @(Model.Gender == "Male" ? "selected" : "")>Erkek</option>
+                <option value="Female" @(Model.Gender == "Female" ? "selected" : "")>Kadın</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="City" class="form-label">Şehir</label>
+                <input id="City" name="City" class="form-control" value="@Model.City" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="District" class="form-label">İlçe</label>
+                <input id="District" name="District" class="form-control" value="@Model.District" />
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="Email" class="form-label">Email</label>
+            <input id="Email" name="Email" type="email" class="form-control" value="@Model.Email" />
+        </div>
+
+        <div class="mb-3">
+            <label for="Phone" class="form-label">Telefon</label>
+            <input id="Phone" name="Phone" type="number" class="form-control" value="@Model.Phone"  min="0" minlength="10"/>
+        </div>
+
+        <div class="mb-3">
+            <label for="Position" class="form-label">Pozisyon</label>
+            <input id="Position" name="Position" class="form-control" value="@Model.Position" />
+        </div>
+
+        <div class="form-check mb-3">
+            <input type="hidden" name="isSuperAdmin" value="false" id="isSuperAdminHidden" />
+            <input id="isSuperAdmin" name="isSuperAdmin" type="checkbox" class="form-check-input" value="true" @(Model.isSuperAdmin ? "checked" : "")
+                   onchange="document.getElementById('isSuperAdminHidden').disabled = this.checked;" />
+            <label for="isSuperAdmin" class="form-check-label">Super Admin</label>
+        </div>
+}
+
+        <div class="mb-3">
+            <label for="Image" class="form-label">Fotoğraf</label>
+            <input type="file" name="file" id="Image" class="form-control" />
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary px-5">Güncelle</button>
+        </div>
+    </form>
+</div>
+
+ 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+ 

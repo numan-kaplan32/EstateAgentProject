@@ -1,0 +1,128 @@
+﻿@using Kervan.Web.Dtos
+@model ListingCategoryDto
+
+@{
+    Layout = "~/Areas/Admin/Views/_LayoutAdmin.cshtml";
+}
+
+<h2 class="mb-4 text-center">Yeni İlan Ekle</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<div class="container px-5">
+    <form action="/Admin/Listing/Create" method="post" enctype="multipart/form-data">
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Kategori</label>
+                <select name="Listing.CategoryId" class="form-control" required>
+                    <option value="">Kategori Seçin</option>
+                    @foreach (var item in Model.Categories)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Başlık</label>
+                <input name="Listing.Title" class="form-control" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Açıklama</label>
+                <textarea name="Listing.Description" class="form-control" required></textarea>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Fiyat</label>
+                <input name="Listing.Price" class="form-control" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Konum</label>
+                <input name="Listing.Location" class="form-control" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Ev Türü</label>
+                <input name="Listing.PropertyType" class="form-control" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Oda Sayısı</label>
+                <input name="Listing.RoomCount" class="form-control" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Banyo Sayısı</label>
+                <input name="Listing.BathroomCount" class="form-control" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Alan (m²)</label>
+                <input name="Listing.Area" class="form-control" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Bulunduğu Kat</label>
+                <input name="Listing.Floor" class="form-control" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Eşyalı mı?</label>
+                <select name="Listing.IsFurnished" class="form-control" required>
+                    <option value="">Seçiniz</option>
+                    <option value="false">Hayır</option>
+                    <option value="true">Evet</option>
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Isıtma Türü</label>
+                <input name="Listing.HeatingType" class="form-control" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Yapım Yılı</label>
+                <input name="Listing.YearBuilt" class="form-control" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">İletişim Adı</label>
+                <input name="Listing.ContactName" class="form-control" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Telefon</label>
+                <input name="Listing.ContactPhone" class="form-control" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">E-posta</label>
+                <input name="Listing.ContactEmail" type="email" class="form-control" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Yayında mı?</label>
+                <select name="Listing.IsActive" class="form-control" required>
+                    <option value="">Seçiniz</option>
+                    <option value="true">Evet</option>
+                    <option value="false">Hayır</option>
+                </select>
+            </div>
+
+            <div class="col-md-12 mb-3">
+                <label class="form-label">Resimler</label>
+                <input type="file" name="files" multiple class="form-control" required />
+            </div>
+
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-success">İlanı Kaydet</button>
+            </div>
+        </div>
+    </form>
+</div>

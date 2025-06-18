@@ -1,0 +1,45 @@
+﻿@model Category
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Kategori Oluştur</h1>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <div class="container px-5 pl-5 ml-5">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <form method="post" enctype="multipart/form-data" action="/Admin/Category/Create" class="user shadow p-4 rounded-5 bg-white">
+                    <div class="form-group">
+                        <label for="Name">Kategori Adı</label>
+                        <input type="text" class="form-control form-control-user" name="Name" id="Name" placeholder="Örn: Satılık Daire" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="file">Kategori Görseli</label>
+                        <input type="file" class="form-control" name="file" id="file" required />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                        <i class="fas fa-save"></i> Kaydet
+                    </button>
+
+                    <a href="/Admin/Home/Index" class="btn btn-secondary btn-user btn-block">
+                        <i class="fas fa-arrow-left"></i> Geri Dön
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

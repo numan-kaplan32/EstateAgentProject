@@ -1,0 +1,44 @@
+﻿@model Image
+
+@{
+    Layout = "~/Areas/Admin/Views/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Yeni Resim Ekle</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <form action="/Admin/Image/Create" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="Name">Resim Adı</label>
+            <input type="text" class="form-control" name="Name" id="Name" value="@Model?.Name" />
+            <span class="text-danger">@Html.ValidationMessage("Name")</span>
+        </div>
+
+        <div class="form-group">
+            <label for="pic1">Resim 1</label>
+            <input type="file" name="pic1" id="pic1" class="form-control-file" required />
+        </div>
+
+        <div class="form-group">
+            <label for="pic2">Resim 2</label>
+            <input type="file" name="pic2" id="pic2" class="form-control-file" />
+        </div>
+
+        <div class="form-group">
+            <label for="pic3">Resim 3</label>
+            <input type="file" name="pic3" id="pic3" class="form-control-file" />
+        </div>
+
+        <button type="submit" class="btn btn-success">Kaydet</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary ml-2">İptal</a>
+    </form>
+</div>

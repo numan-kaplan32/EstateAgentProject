@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Category>
+@{
+    ViewData["Title"] = "Kategori Listesi";
+    Layout = "~/Areas/Admin/Views/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Kategori Listesi</h1>
+
+    <div class="row">
+        @foreach (var category in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow h-100">
+                    <img class="card-img-top" src="~/CategoryImage/@category.Image" alt="Kategori Resmi" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">@category.CategoryName</h5>
+
+                        <form method="get" action="/Admin/Category/Update" class="d-inline">
+                           <input type="hidden" name="id" value="@category.Id" />
+                            <button type="submit" class="btn btn-secondary btn-sm ml-1">
+                                Düzenle
+                            </button>
+                        </form>
+
+                        <form method="post" action="/Admin/Category/Delete/@category.Id" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-danger btn-sm ml-1" onclick="return confirm('Silmek istediğine emin misin?');">
+                                Sil
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

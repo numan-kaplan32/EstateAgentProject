@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Administrator>
+ 
+@{
+    Layout = "~/Areas/Admin/Views/_LayoutAdmin.cshtml";
+}
+     <script src="https://cdn.tailwindcss.com"></script>
+<div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6 text-center">Yönetici Listesi</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pl-3">
+            @foreach (var admin in Model)
+            {
+                <div class="bg-white rounded-2xl shadow-xl p-6 relative transition transform hover:scale-105 flex flex-col items-center text-center space-y-4">
+                    <img src="~/AdminImage/@admin.Image" alt="Profil Fotoğrafı" class="w-32 h-32 object-cover rounded-full border-4 border-blue-500 shadow-md" />
+
+                    <h2 class="text-2xl font-bold text-gray-800">@($"{admin.Name} {admin.Surname}")</h2>
+
+
+                    <div class="text-gray-600 space-y-1">
+                        <p><span class="font-semibold text-gray-800">Mail:</span> @admin.Email</p>
+                        <p><span class="font-semibold text-gray-800">Telefon:</span> @admin.Phone</p>
+                        <p><span class="font-semibold text-gray-800">Pozisyon:</span> @admin.Position</p>
+                    </div>
+
+                    <div class="flex justify-center gap-3 pt-4">
+                        <form action="/Admin/Administrator/Update/@admin.Id" method="get">
+                            <button  class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">Güncelle</button>
+                        </form>
+                        
+
+                        <form action="/Admin/Administrator/Delete/@admin.Id" method="post" onsubmit="return confirm('Silmek istediğinize emin misiniz?');">
+                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
+                                Sil
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+

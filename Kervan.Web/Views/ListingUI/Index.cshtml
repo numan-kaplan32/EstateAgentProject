@@ -1,0 +1,125 @@
+﻿ 
+@model IEnumerable<Listing>
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@{
+	var isFiltered = !string.IsNullOrEmpty(Context.Request.Query["category"]);
+}
+
+
+
+<div class="section properties">
+	<div class="container">
+		<ul class="properties-filter list-inline mb-4">
+			@if (!isFiltered)
+{
+			@if (Model != null && Model.Any())
+			{
+				var categories = Model.Select(x => x.Category).Distinct();
+				foreach (var category in categories)
+				{
+					<li class="list-inline-item me-2">
+						<a href="@Url.Action("Index", "ListingUI", new { category = category.CategoryName })" class="btn btn-outline-primary btn-sm">
+							@category.CategoryName
+						</a>
+					</li>
+				}
+			}
+}
+			else
+			{
+				
+				<li class="list-inline-item me-2">
+					<a href="/ListingUI/Index" class="btn btn-outline-primary btn-sm">
+						Geri
+					</a>
+				</li>
+			}
+		</ul>
+	
+
+		<div class="container py-4">
+			<div class="row">
+				@if (Model != null)
+				{
+					@foreach (var item in Model)
+					{
+						<div class="col-lg-4 col-md-6">
+							<div class="item">
+								<div id="carousel-@item.Id" class="carousel slide" data-bs-ride="carousel">
+									<div class="carousel-inner">
+										@for (int i = 0; i < item.ImageUrls.Count; i++)
+										{
+											var url = item.ImageUrls[i];
+											var extension = System.IO.Path.GetExtension(url)?.ToLowerInvariant() ?? "";
+											bool isVideo = extension == ".mp4" || extension == ".webm" || extension == ".ogg";
+
+											<div class="carousel-item @(i == 0 ? "active" : "")">
+												@if (isVideo)
+												{
+													<video controls class="d-block w-100" style="height:250px;">
+														<source src="@Url.Content("~/ImageListing/" + url.TrimStart('.'))" type="video/@extension.TrimStart('.')" />
+														Tarayıcınız video etiketini desteklemiyor.
+													</video>
+												}
+												else
+												{
+													<img src="@Url.Content("~/ImageListing/" + url)" class="d-block w-100" style="height:250px;" alt="Media @(i + 1)" />
+												}
+											</div>
+										}
+
+									</div>
+									<button class="carousel-control-prev" type="button" data-bs-target="#carousel-@item.Id" data-bs-slide="prev">
+										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+										<span class="visually-hidden">Previous</span>
+									</button>
+									<button class="carousel-control-next" type="button" data-bs-target="#carousel-@item.Id" data-bs-slide="next">
+										<span class="carousel-control-next-icon" aria-hidden="true"></span>
+										<span class="visually-hidden">Next</span>
+									</button>
+								</div>
+
+
+								<span class="category ">@item.Title</span>
+								<h6>@string.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:C}", item.Price)</h6>
+
+								<h4><a href="property-details.html">@item.Location</a></h4>
+								<ul>
+									<li>Oda sayısı: <span>@item.RoomCount</span></li>
+									<br />
+									<li>Banyo: <span>@item.BathroomCount</span></li>
+									<br />
+									<li>Alan: <span>@item.Area m2</span></li>
+									<br />
+									<li>Kat: <span>@item.Floor</span></li>
+									<br />
+									<li>Otopark: <span>Var</span></li>
+								</ul>
+								<div class="main-button">
+									<form action="/ListingUI/Details" method="post">
+										<button class="bg-dark rounded-3" type="submit" name="id" value="@item.Id" style="width:90px; height:40px; color:aliceblue; ">İncele</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					}
+				}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<ul class="pagination">
+					<li><a class="is_active" href="#">1</a></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">>></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+

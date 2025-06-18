@@ -1,0 +1,62 @@
+﻿@model Category
+
+@{
+    ViewData["Title"] = "Kategori Güncelle";
+    Layout = "~/Areas/Admin/Views/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Kategori Güncelle</h1>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 bg-primary text-white">
+                    <h6 class="m-0 font-weight-bold">Kategori Bilgileri</h6>
+                </div>
+                <div class="card-body">
+                    <form action="/Admin/Category/Update" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="@Model.Id" />
+
+                        <div class="form-group">
+                            <label for="CategoryName">Kategori Adı</label>
+                            <input type="text" name="CategoryName" id="CategoryName" class="form-control" value="@Model.CategoryName" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mevcut Görsel</label><br />
+                            @if (!string.IsNullOrEmpty(Model.Image))
+                            {
+                                <img src="~/CategoryImage/@Model.Image" alt="Kategori Resmi" class="img-thumbnail mb-2" style="max-height: 200px;" />
+                            }
+                            else
+                            {
+                                <p class="text-muted">Görsel bulunmuyor</p>
+                            }
+                        </div>
+
+                        <div class="form-group">
+                            <label for="file">Yeni Görsel Yükle</label>
+                            <input type="file" name="file" id="file" class="form-control-file" />
+                        </div>
+
+                        <div class="text-right">
+                            <a href="/Admin/Category/CreateList" class="btn btn-secondary">Geri</a>
+                            <button type="submit" class="btn btn-success">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Listing>
+
+@{
+    Layout = "~/Areas/Admin/Views/_LayoutAdmin.cshtml";
+}
+
+<div class="container py-4" >
+    <div class="row">
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="item p-3" style="border: double; border-radius: 8px; box-shadow: 0 0 6px rgba(0,0,0,0.9); background:rgba(0,0,0,0.1);">
+                        <div id="carousel-@item.Id" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                @for (int i = 0; i < item.ImageUrls.Count; i++)
+                                {
+                                    var url = item.ImageUrls[i];
+                                    var extension = System.IO.Path.GetExtension(url)?.ToLowerInvariant() ?? "";
+                                    bool isVideo = extension == ".mp4" || extension == ".webm" || extension == ".ogg";
+
+                                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                                        @if (isVideo)
+                                        {
+                                            <video controls class="d-block w-100" style="height:250px;">
+                                                <source src="@Url.Content("~/ImageListing/" + url.TrimStart('.'))" type="video/@extension.TrimStart('.')" />
+                                                Tarayıcınız video etiketini desteklemiyor.
+                                            </video>
+                                        }
+                                        else
+                                        {
+                                            <img src="@Url.Content("~/ImageListing/" + url)" class="d-block w-100" style="height:250px;" alt="Media @(i + 1)" />
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                            <a class="carousel-control-prev" href="#carousel-@item.Id" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carousel-@item.Id" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+
+                        <span class="category">@item.Title</span>
+                        <p> @item.Location</p>
+                        <h6>@string.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:C}", item.Price)</h6>
+
+                        <ul>
+                            <li>Oda sayısı: <span>@item.RoomCount</span></li>
+                             
+                            <li>Banyo: <span>@item.BathroomCount</span></li>
+                             
+                            <li>Alan: <span>@item.Area m2</span></li>
+                           
+                            <li>Kat: <span>@item.Floor</span></li>
+                            
+                            <li>Otopark: <span>Var</span></li>
+                        </ul>
+                        <div class="row justify-content-around">
+                            <div class="col-5">
+                                <form action="/Admin/Listing/Update/@item.Id" method="get">
+                                    <button type="submit" class="btn btn-secondary w-100">Güncelle</button>
+                                </form>
+                            </div>
+                            <div class="col-5">
+                                <form action="/Admin/Listing/Delete/@item.Id" method="post">
+                                    <button type="submit" class="btn btn-danger w-100">Sil</button>
+                                </form>
+                            </div>
+                        </div>
+
+                      
+
+                       
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

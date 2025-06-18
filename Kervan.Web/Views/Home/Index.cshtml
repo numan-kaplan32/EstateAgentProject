@@ -1,0 +1,303 @@
+﻿@model HomeIndexDto
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<style>
+	.owl-carousel .item {
+		width: 100% !important;
+	}
+
+	.carousel-inner img {
+		width: 100%;
+		height: 500px;
+		object-fit: cover;
+	}
+
+</style>
+
+<div class="main-banner">
+	@foreach (var item in Model.Images)
+	{
+		<div id="carousel-@item.Id" class="carousel slide mb-5" data-bs-ride="carousel">
+			<div class="carousel-inner">
+		@if (item.Name == "Resimler Anasayfa")
+		{
+		 
+					var images = new List<string> { item.Image1, item.Image2, item.Image3 };
+					for (int i = 0; i < images.Count; i++)
+					{
+						var imgUrl = images[i];
+						if (!string.IsNullOrEmpty(imgUrl))
+						{
+							<div class="carousel-item @(i == 0 ? "active" : "")">
+								<img src="@Url.Content("~/ImageHome/" + imgUrl)" class="d-block w-100" style="height: 500px; object-fit: cover;" alt="Slider image @(i + 1)" />
+							</div>
+						}
+					}
+				
+		}
+				
+			</div>
+			<button class="carousel-control-prev" type="button" data-bs-target="#carousel-@item.Id" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Önceki</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#carousel-@item.Id" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Sonraki</span>
+			</button>
+		</div>
+	}
+</div>
+
+
+
+
+	<div class="video section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 offset-lg-4">
+					<div class="section-heading text-center">
+						<h6>| Video</h6>
+						<h2>Daha Yakından Görün </h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="video-content">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1">
+					<div class="video-frame">
+						<img src="assets/images/video-frame.jpg" alt="">
+						<a href="https://youtube.com" target="_blank"><i class="fa fa-play"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="fun-facts">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="wrapper">
+						<div class="row">
+							<div class="col-lg-4">
+								<div class="counter">
+									<h2 class="timer count-title count-number" data-to="34" data-speed="1000"></h2>
+									<p class="count-text ">Buildings<br>Finished Now</p>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="counter">
+									<h2 class="timer count-title count-number" data-to="30" data-speed="2000"></h2>
+									<p class="count-text ">Yıl<br>Tecrübe</p>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="counter">
+									<h2 class="timer count-title count-number" data-to="24" data-speed="1000"></h2>
+									<p class="count-text ">Awwards<br>Won 2023</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="properties section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 offset-lg-4">
+					<div class="section-heading text-center">
+						<h2 style="color:darkred;">| İlanlar</h2>
+						<h2></h2>
+					</div>
+				</div>
+			</div>
+			<div class="container py-4">
+				<div class="row">
+					@if (Model != null)
+					{
+						@foreach (var item in Model.Listings)
+						{
+							<div class="col-lg-4 col-md-6">
+								<div class="item">
+									<div id="carousel-@item.Id" class="carousel slide" data-bs-ride="false">
+										<div class="carousel-inner">
+											@for (int i = 0; i < item.ImageUrls.Count; i++)
+											{
+												var url = item.ImageUrls[i];
+												var extension = System.IO.Path.GetExtension(url)?.ToLowerInvariant() ?? "";
+												bool isVideo = extension == ".mp4" || extension == ".webm" || extension == ".ogg";
+
+												<div class="carousel-item @(i == 0 ? "active" : "")">
+													@if (isVideo)
+													{
+														<video controls class="d-block w-100" style="height:250px;">
+															<source src="@Url.Content("~/ImageListing/" + url.TrimStart('.'))" type="video/@extension.TrimStart('.')" />
+															Tarayıcınız video etiketini desteklemiyor.
+														</video>
+													}
+													else
+													{
+														<img src="@Url.Content("~/ImageListing/" + url)" class="d-block w-100" style="height:250px;" alt="Media @(i + 1)" />
+													}
+												</div>
+											}
+
+										</div>
+										<button class="carousel-control-prev" type="button" data-bs-target="#carousel-@item.Id" data-bs-slide="prev">
+											<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+											<span class="visually-hidden">Previous</span>
+										</button>
+										<button class="carousel-control-next" type="button" data-bs-target="#carousel-@item.Id" data-bs-slide="next">
+											<span class="carousel-control-next-icon" aria-hidden="true"></span>
+											<span class="visually-hidden">Next</span>
+										</button>
+									</div>
+
+
+									<span class="category ">@item.Title</span>
+									<h6>@string.Format(new System.Globalization.CultureInfo("tr-TR"), "{0:C}", item.Price)</h6>
+
+									<h4><a href="property-details.html">@item.Location</a></h4>
+									<ul>
+										<li>Oda sayısı: <span>@item.RoomCount</span></li><br />
+										<li>Banyo: <span>@item.BathroomCount</span></li><br />
+										<li>Alan: <span>@item.Area m2</span></li> <br />
+										<li>Kat: <span>@item.Floor</span></li><br />
+										<li>Otopark: <span>Var</span></li>
+									</ul>
+									<div class="main-button">
+									<form action="/ListingUI/Details" method="post">
+										<button class="bg-dark rounded-3" type="submit" name="id" value="@item.Id" style="width:90px; height:40px; color:aliceblue; ">İncele</button>
+									</form>
+									</div>
+								</div>
+							</div>
+						}
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+
+		<div class="contact section">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-4 offset-lg-4">
+						<div class="section-heading text-center">
+							<h6>| İletişime Geçin</h6>
+					<h2>Bizimle Hemen İletişime Geçin</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="contact-content">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-7">
+						<div id="map">
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12031.26420604846!2d28.789155!3d41.10388!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caaf15bb27d74d%3A0xf3976d16e2ef7e5f!2sKervan%20Emlak!5e0!3m2!1str!2str!4v1717345000000!5m2!1str!2str" width="100%" height="500px" frameborder="0" style="border:0; border-radius: 10px; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);" allowfullscreen=""></iframe>
+						</div>
+				</div>
+
+						<div class="container">
+							<div class="row pb-5">
+								<!-- Left Side: Contact Info -->
+							<div class="col-lg-7">
+								<div class="row g-3">
+									<div class="col-md-6">
+										<div class="d-flex align-items-center justify-content-start p-3 border rounded shadow-sm h-100">
+											 
+											<div>
+												<h6 class="mb-1">532-280-5918</h6>
+												<small class="text-muted">Telefon Numarası</small>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="d-flex align-items-center justify-content-start p-3 border rounded shadow-sm h-100">
+											 
+											<div>
+												<h6 class="mb-1">kervanemlak@hotmail.com</h6>
+												<small class="text-muted">İş Mail Adresi</small>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+								<!-- Right Side: Contact Form -->
+								<div class="col-lg-5">
+					<form id="contact-form" action="/Contact/MessageCreate" method="post">
+						<div class="row">
+							@if (TempData["Empty"] != null)
+							{
+								<div class="alert alert-danger text-center fw-bold">
+									@TempData["Empty"]
+								</div>
+							}
+							@if (TempData["Success"] != null)
+							{
+								<div class="alert alert-success text-center fw-bold">@TempData["Success"]</div>
+							}
+
+							<div class="col-lg-12">
+								<fieldset>
+									<label for="name">İsim</label>
+									<input type="text" name="Name" id="name" placeholder="İsminiz..." autocomplete="on" required>
+								</fieldset>
+							</div>
+							<div class="col-lg-12">
+								<fieldset>
+									<label for="surname">Soyisim</label>
+									<input type="text" name="Surname" id="surname" placeholder="Soyisminiz..." autocomplete="on" required>
+								</fieldset>
+							</div>	
+							<div class="col-lg-12">
+								<fieldset>
+									<label for="email">Mail</label>
+									<input type="email" name="Email" id="email" placeholder="Mail adresiniz..." required>
+								</fieldset>
+							</div>
+							<div class="col-lg-12">
+								<fieldset>
+									<label for="subject">Konu</label>
+									<input type="text" name="Subject" id="subject" placeholder="Konu..." autocomplete="on">
+								</fieldset>
+							</div>
+							<div class="col-lg-12">
+								<fieldset>
+									<label for="message">Mesaj</label>
+									<textarea name="Body" id="message" placeholder="Mesajınızı girin"></textarea>
+								</fieldset>
+							</div>
+							<div class="col-lg-12">
+								<fieldset>
+									<button type="submit" id="form-submit" class="orange-button">Gönder</button>
+								</fieldset>
+							</div>
+						</div>
+									</form>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+
+					

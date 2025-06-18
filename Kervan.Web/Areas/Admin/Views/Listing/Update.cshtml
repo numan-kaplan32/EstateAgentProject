@@ -1,0 +1,193 @@
+﻿@model Listing
+@{
+    Layout = "~/Areas/Admin/Views/_LayoutAdmin.cshtml";
+}
+
+
+<h2 class="mb-4 text-center">İlanı Güncelle</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<div class="container px-5">
+    <form asp-area="Admin" asp-controller="Listing" asp-action="Update" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Başlık</label>
+                <input name="Title" class="form-control" value="@Model.Title" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Açıklama</label>
+                <textarea name="Description" class="form-control" required>@Model.Description</textarea>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Fiyat</label>
+                <input name="Price" class="form-control" value="@Model.Price" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Konum</label>
+                <input name="Location" class="form-control" value="@Model.Location" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Ev Türü</label>
+                <input name="PropertyType" class="form-control" value="@Model.PropertyType" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Oda Sayısı</label>
+                <input name="RoomCount" class="form-control" value="@Model.RoomCount" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Banyo Sayısı</label>
+                <input name="BathroomCount" class="form-control" value="@Model.BathroomCount" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Alan (m2)</label>
+                <input name="Area" class="form-control" value="@Model.Area" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Bulunduğu Kat</label>
+                <input name="Floor" class="form-control" value="@Model.Floor" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Eşyalı mı?</label>
+                <select name="IsFurnished" class="form-select" required>
+                    <option value="" disabled>Seçiniz</option>
+                    <option value="false" @(Model.IsFurnished == false ? "selected" : "")>Hayır</option>
+                    <option value="true" @(Model.IsFurnished == true ? "selected" : "")>Evet</option>
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Isıtma Türü</label>
+                <input name="HeatingType" class="form-control" value="@Model.HeatingType" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Yapım Yılı</label>
+                <input name="YearBuilt" class="form-control" value="@Model.YearBuilt" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">İletişim Adı</label>
+                <input name="ContactName" class="form-control" value="@Model.ContactName" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Telefon</label>
+                <input name="ContactPhone" class="form-control" value="@Model.ContactPhone" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">E-posta</label>
+                <input name="ContactEmail" class="form-control" value="@Model.ContactEmail" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Yayında mı?</label>
+                <select name="IsActive" class="form-select" required>
+                    <option value="" disabled>Seçiniz</option>
+                    <option value="true" @(Model.IsActive == true ? "selected" : "")>Evet</option>
+                    <option value="false" @(Model.IsActive == false ? "selected" : "")>Hayır</option>
+                </select>
+            </div>
+
+            <div class="col-md-12 mb-3">
+                <label class="form-label">Resimler</label>
+
+                <!-- Mevcut resimleri küçük önizleme olarak gösteriyoruz -->
+                <div id="existingImages" class="mb-3 d-flex flex-wrap gap-2">
+                    @if (Model.ImageUrlsSerialized != null)
+                    {
+                        var images = System.Text.Json.JsonSerializer.Deserialize<List<string>>(Model.ImageUrlsSerialized);
+                        if (images != null)
+                        {
+                            foreach (var img in images)
+                            {
+                                <img src="~/ImageListing/@img" alt="İlan Resmi" style="width: 80px; height: 80px; object-fit: cover; border-radius: 5px; border: 1px solid #ddd;" />
+                            }
+                        }
+                    }
+                </div>
+
+                <div class="input-group pl-3 rounded-2" style="position: relative;">
+                    <input type="file" name="files" id="filesInput" multiple class="form-control" required hidden />
+                    <label class="input-group-text btn btn-secondary pl-3" for="filesInput">Resimleri Güncelle</label>
+                </div>
+
+                <!-- Drag and Drop alanı -->
+                <div id="dropZone"
+                     style="margin-top: 15px; padding: 20px; border: 2px dashed #aaa; border-radius: 8px; text-align: center; color: #666; cursor: pointer;">
+                    Dosyaları buraya sürükleyip bırak veya tıkla
+                </div>
+
+                <small id="fileList" class="form-text text-muted mt-1"></small>
+
+                <script>
+                    const filesInput = document.getElementById('filesInput');
+                    const fileList = document.getElementById('fileList');
+                    const dropZone = document.getElementById('dropZone');
+ 
+                    function updateFileList() {
+                        const files = filesInput.files;
+                        if (files.length === 0) {
+                            fileList.textContent = '';
+                            return;
+                        }
+                        const names = [];
+                        for (let i = 0; i < files.length; i++) {
+                            names.push(files[i].name);
+                        }
+                        fileList.textContent = "Seçilen dosyalar: " + names.join(', ');
+                    }
+
+                    filesInput.addEventListener('change', updateFileList);
+
+           
+                    dropZone.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                        dropZone.style.borderColor = '#333';
+                        dropZone.style.color = '#000';
+                    });
+
+                    dropZone.addEventListener('dragleave', (e) => {
+                        e.preventDefault();
+                        dropZone.style.borderColor = '#aaa';
+                        dropZone.style.color = '#666';
+                    });
+
+                    dropZone.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        dropZone.style.borderColor = '#aaa';
+                        dropZone.style.color = '#666';
+
+                        const droppedFiles = e.dataTransfer.files;
+                        if (droppedFiles.length > 0) {
+                         
+                            const dataTransfer = new DataTransfer();
+                            for (let i = 0; i < droppedFiles.length; i++) {
+                                dataTransfer.items.add(droppedFiles[i]);
+                            }
+                            filesInput.files = dataTransfer.files;
+                            updateFileList();
+                        }
+                    });
+
+                 
+                    dropZone.addEventListener('click', () => {
+                        filesInput.click();
+                    });
+                </script>
+
+
+
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-success">İlanı Kaydet</button>
+            </div>
+        </div>
+    </form>
+</div>
+    
