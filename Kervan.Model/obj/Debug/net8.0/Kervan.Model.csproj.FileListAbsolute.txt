@@ -1,0 +1,17 @@
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\bin\Debug\net8.0\Kervan.Model.deps.json
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\bin\Debug\net8.0\Kervan.Model.runtimeconfig.json
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\bin\Debug\net8.0\Kervan.Model.dll
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\bin\Debug\net8.0\Kervan.Model.pdb
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\bin\Debug\net8.0\Kervan.Core.dll
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\bin\Debug\net8.0\Kervan.Core.pdb
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\obj\Debug\net8.0\Kervan.Model.csproj.AssemblyReference.cache
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\obj\Debug\net8.0\Kervan.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\obj\Debug\net8.0\Kervan.Model.AssemblyInfoInputs.cache
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\obj\Debug\net8.0\Kervan.Model.AssemblyInfo.cs
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\obj\Debug\net8.0\Kervan.Model.csproj.CoreCompileInputs.cache
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\obj\Debug\net8.0\Kervan.M.A9B6D092.Up2Date
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\obj\Debug\net8.0\Kervan.Model.dll
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\obj\Debug\net8.0\refint\Kervan.Model.dll
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\obj\Debug\net8.0\Kervan.Model.pdb
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\obj\Debug\net8.0\Kervan.Model.genruntimeconfig.cache
+C:\Users\numan\source\repos\Kervan.Model\Kervan.Model\obj\Debug\net8.0\ref\Kervan.Model.dll
